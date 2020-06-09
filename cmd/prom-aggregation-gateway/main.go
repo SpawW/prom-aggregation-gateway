@@ -265,8 +265,7 @@ func (a *aggate) handler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// reset gauges
-	a.families = map[string]*dto.MetricFamily{}
+	// reset counts for gauge averages
 	a.fingerprintCounts = make(map[model.Fingerprint]int)
 }
 
