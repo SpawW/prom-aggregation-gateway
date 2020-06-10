@@ -84,6 +84,7 @@ func mergeMetric(ty dto.MetricType, count int, a, b *dto.Metric) *dto.Metric {
 		return &dto.Metric{
 			Label: a.Label,
 			Counter: &dto.Counter{
+				// TODO: how would this work in a multiple instance scenario?
 				Value: float64ptr(*a.Counter.Value + *b.Counter.Value),
 			},
 		}
@@ -276,6 +277,7 @@ func main() {
 	flag.Parse()
 
 	a := newAggate()
+	fmt.Printf("Listening on %s\n", *listen)
 	http.HandleFunc("/metrics", a.handler)
 	http.HandleFunc(*pushPath, func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", *cors)
