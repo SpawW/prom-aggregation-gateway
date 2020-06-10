@@ -112,7 +112,7 @@ func mergeMetric(ty dto.MetricType, count int, a, b *dto.Metric) *dto.Metric {
 		return &dto.Metric{
 			Label: a.Label,
 			Untyped: &dto.Untyped{
-				Value: float64ptr(*a.Untyped.Value + *b.Untyped.Value),
+				Value: float64ptr((*a.Untyped.Value*(float64(count)-1) + *b.Untyped.Value) / float64(count)),
 			},
 		}
 
