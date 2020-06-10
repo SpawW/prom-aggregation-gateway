@@ -9,6 +9,6 @@ RUN \
 
 FROM scratch
 COPY --from=builder /go/bin /app/
-EXPOSE 80
+EXPOSE 9091
 WORKDIR /app
 CMD ["./prom-aggregation-gateway"]

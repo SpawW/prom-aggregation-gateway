@@ -270,8 +270,17 @@ func (a *aggate) handler(w http.ResponseWriter, r *http.Request) {
 	a.fingerprintCounts = make(map[model.Fingerprint]int)
 }
 
+func readyHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
+	w.Write([]byte("OK"))
+}
+func healthyHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
+	w.Write([]byte("OK"))
+}
+
 func main() {
-	listen := flag.String("listen", ":80", "Address and port to listen on.")
+	listen := flag.String("listen", ":9091", "Address and port to listen on.")
 	cors := flag.String("cors", "*", "The 'Access-Control-Allow-Origin' value to be returned.")
 	pushPath := flag.String("push-path", "/metrics/", "HTTP path to accept pushed metrics.")
 	flag.Parse()
@@ -279,6 +288,10 @@ func main() {
 	a := newAggate()
 	fmt.Printf("Listening on %s\n", *listen)
 	http.HandleFunc("/metrics", a.handler)
+
+	http.HandleFunc("/-/healthy", healthyHandler)
+	http.HandleFunc("/-/ready", readyHandler)
+
 	http.HandleFunc(*pushPath, func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", *cors)
 		if err := a.parseAndMerge(r.Body); err != nil {
