@@ -94,7 +94,8 @@ func mergeMetric(ty dto.MetricType, count int, a, b *dto.Metric) *dto.Metric {
 		return &dto.Metric{
 			Label: a.Label,
 			Gauge: &dto.Gauge{
-				Value: float64ptr((*a.Gauge.Value*(float64(count)-1) + *b.Gauge.Value) / float64(count)),
+				Value: float64ptr(*a.Gauge.Value),
+// 				Value: float64ptr((*a.Gauge.Value*(float64(count)-1) + *b.Gauge.Value) / float64(count)),
 			},
 		}
 
