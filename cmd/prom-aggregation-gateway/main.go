@@ -90,11 +90,12 @@ func mergeMetric(ty dto.MetricType, count int, a, b *dto.Metric) *dto.Metric {
 		}
 
 	case dto.MetricType_GAUGE:
-		// Average out value
+		// fmt.Printf("a value %s\n", *a)
+		// fmt.Printf("b value %s\n", *b)
 		return &dto.Metric{
 			Label: a.Label,
 			Gauge: &dto.Gauge{
-				Value: float64ptr(*a.Gauge.Value),
+				Value: float64ptr(*b.Gauge.Value),
 // 				Value: float64ptr((*a.Gauge.Value*(float64(count)-1) + *b.Gauge.Value) / float64(count)),
 			},
 		}
