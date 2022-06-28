@@ -26,7 +26,8 @@ jobs:
 #       run: |
 #         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag spaww/prom-aggregation-gateway:$(date +%s)
+      run: docker build . --file Dockerfile --tag spaww/prom-aggregation-gateway
+#       run: docker build . --file Dockerfile --tag spaww/prom-aggregation-gateway:$(date +%s)
       
     - name: Docker Push
       run: docker push spaww/prom-aggregation-gateway
